@@ -2,71 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEO ADVERTS Portfolio</title>
+    <title>Leo Adverts Portfolio</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body { font-family: sans-serif; padding: 40px; background: #f4f4f4; color: #333; }
-        h1 { text-align: center; color: #000; }
-        .gallery { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); 
-            gap: 20px; 
-            margin-top: 30px; 
-        }
-        .img-card { background: white; padding: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        img { width: 100%; height: auto; display: block; }
+        body { font-family: sans-serif; padding: 20px; background: #fff; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 20px; }
+        img { width: 100%; height: auto; display: block; border: 1px solid #ddd; }
         .pdf-btn { 
-            position: fixed; top: 20px; right: 20px; padding: 15px 25px; 
-            background: #e63946; color: white; border: none; font-size: 18px; 
-            cursor: pointer; border-radius: 5px; z-index: 1000; 
+            position: fixed; top: 20px; right: 20px; padding: 20px 40px; 
+            background: #e63946; color: white; border: none; 
+            font-size: 20px; cursor: pointer; border-radius: 50px; z-index: 1000;
         }
     </style>
 </head>
-<body>
-
-    <button class="pdf-btn" onclick="generatePDF()">Download Full Portfolio PDF</button>
-
-    <div id="portfolio-content">
-        <h1>LEO ADVERTS - Full Portfolio</h1>
-        <div class="gallery" id="image-gallery"></div>
-    </div>
+<body id="portfolio">
+    <h1>Leo Adverts - Complete Portfolio</h1>
+    <div class="gallery" id="image-gallery"></div>
+    <button class="pdf-btn" onclick="generatePDF()">Download Portfolio PDF</button>
 
     <script>
-        // Full list of your uploaded image files
+        // ADD ALL YOUR FILENAMES HERE EXACTLY AS THEY ARE NAMED ON YOUR COMPUTER
         const imageFiles = [
-            "WhatsApp Image 2026-06-25 at 9.01.30 AM.jpeg", "IMG-20260628-WA0075.jpg", "WhatsApp Image 2026-06-25 at 9.35.28 AM (2).jpeg",
-            "WhatsApp Image 2026-06-25 at 9.35.21 AM.jpeg", "WhatsApp Image 2026-06-25 at 9.35.22 AM.jpeg", "WhatsApp Image 2026-06-25 at 9.35.21 AM (3).jpeg",
-            "IMG-20260622-WA0075.jpg", "WhatsApp Image 2026-06-25 at 9.35.11 AM (2).jpeg", "WhatsApp Image 2026-06-25 at 9.35.21 AM (2).jpeg",
-            "WhatsApp Image 2026-06-25 at 9.35.16 AM.jpeg", "IMG-20260511-WA0028.jpg", "IMG-20260520-WA0100.jpg",
-            "IMG-20260623-WA0051.jpg", "WhatsApp Image 2026-06-25 at 9.20.23 AM.jpeg", "IMG-20260525-WA0063.jpg",
-            "WhatsApp Image 2026-06-25 at 9.01.51 AM (1).jpeg", "WhatsApp Image 2026-06-25 at 9.35.17 AM (1).jpeg",
-            "WhatsApp Image 2026-06-25 at 9.01.34 AM.jpeg", "WhatsApp Image 2026-06-25 at 9.35.29 AM (2).jpg",
-            "WhatsApp Image 2026-06-25 at 9.35.16 AM (1).jpeg", "WhatsApp Image 2026-06-25 at 9.35.30 AM (1).jpg",
-            "WhatsApp Image 2026-06-25 at 9.20.26 AM (1).jpeg", "IMG-20260525-WA0056.jpg", "WhatsApp Image 2026-06-25 at 9.20.32 AM.jpeg",
-            "WhatsApp Image 2026-06-25 at 9.35.12 AM (2).jpeg", "WhatsApp Image 2026-06-25 at 9.35.07 AM.jpeg", "IMG-20260511-WA0052.jpg",
-            "WhatsApp Image 2026-06-25 at 9.20.15 AM.jpeg", "IMG-20260525-WA0060.jpg", "WhatsApp Image 2026-06-25 at 9.35.00 AM (1).jpeg"
-            // ... [I have mapped all images to the DOM below]
+            "IMG-20260623-WA0051.jpg", "WhatsApp Image 2026-06-25 at 9.35.16 AM (1).jpeg", 
+            "WhatsApp Image 2026-06-25 at 9.35.30 AM.jpeg", "WhatsApp Image 2026-06-25 at 9.35.17 AM.jpeg", 
+            "WhatsApp Image 2026-06-25 at 9.01.15 AM.jpeg", "WhatsApp Image 2026-06-25 at 9.35.21 AM (1).jpeg", 
+            "IMG-20260622-WA0075.jpg", "WhatsApp Image 2026-06-25 at 9.20.30 AM (2).jpeg", 
+            "WhatsApp Image 2026-06-25 at 9.01.30 AM.jpeg", "IMG-20260216-WA0166.jpg", 
+            "IMG-20260216-WA0169.jpg", "IMG-20260511-WA0035.jpg", "WhatsApp Image 2026-06-25 at 9.01.08 AM.jpeg", 
+            "IMG-20260419-WA0014.jpg", "IMG-20260520-WA0059.jpg", "IMG-20260216-WA0148.jpg", 
+            "WhatsApp Image 2026-06-25 at 9.35.28 AM.jpeg", "IMG-20260511-WA0028.jpg", 
+            "WhatsApp Image 2026-06-25 at 9.01.20 AM.jpeg", "IMG-20260525-WA0060.jpg", 
+            "WhatsApp Image 2026-06-25 at 9.35.01 AM (1).jpeg", "WhatsApp Image 2026-06-25 at 9.20.30 AM.jpeg", 
+            "WhatsApp Image 2026-06-25 at 9.35.29 AM (2).jpg", "WhatsApp Image 2026-06-25 at 9.35.16 AM.jpeg", 
+            "WhatsApp Image 2026-06-25 at 9.20.26 AM.jpeg", "IMG-20260511-WA0052.jpg", 
+            "WhatsApp Image 2026-06-25 at 9.35.00 AM.jpeg", "WhatsApp Image 2026-06-25 at 9.20.26 AM (1).jpeg", 
+            "IMG-20260511-WA0051.jpg", "WhatsApp Image 2026-06-25 at 9.20.20 AM.jpeg", "IMG-20260628-WA0075.jpg", 
+            "WhatsApp Image 2026-06-25 at 9.20.23 AM.jpeg", "IMG-20260511-WA0049.jpg", 
+            "WhatsApp Image 2026-06-25 at 9.20.27 AM (1).jpeg", "WhatsApp Image 2026-06-25 at 9.35.00 AM (1).jpeg", 
+            "IMG-20260216-WA0118.jpg", "WhatsApp Image 2026-06-25 at 9.35.12 AM (2).jpeg", 
+            "WhatsApp Image 2026-06-25 at 9.20.19 AM (1).jpeg", "IMG-20260520-WA0102.jpg", 
+            "WhatsApp Image 2026-06-25 at 9.35.12 AM (3).jpeg", "IMG-20260217-WA0059.jpg", 
+            "IMG-20260525-WA0063.jpg", "WhatsApp Image 2026-06-25 at 9.01.34 AM.jpeg", 
+            "WhatsApp Image 2026-06-25 at 9.35.28 AM (2).jpeg", "IMG-20260511-WA0037.jpg", 
+            "WhatsApp Image 2026-06-25 at 9.35.21 AM.jpeg", "IMG-20260520-WA0100.jpg", 
+            "IMG-20260111-WA0078.jpg", "IMG-20260511-WA0034.jpg", "WhatsApp Image 2026-06-25 at 9.20.30 AM (1).jpeg", 
+            "IMG-20260216-WA0167.jpg", "WhatsApp Image 2026-06-25 at 9.35.28 AM (1).jpeg", 
+            "IMG-20260217-WA0055.jpg", "WhatsApp Image 2026-06-25 at 9.01.15 AM (1).jpeg", 
+            "WhatsApp Image 2026-06-25 at 9.35.22 AM.jpeg", "WhatsApp Image 2026-06-25 at 9.01.13 AM.jpeg", 
+            "IMG-20260511-WA0030.jpg", "WhatsApp Image 2026-06-25 at 9.35.07 AM.jpeg", 
+            "IMG-20260520-WA0050.jpg", "WhatsApp Image 2026-06-25 at 9.34.53 AM.jpeg", 
+            "WhatsApp Image 2026-06-25 at 9.35.11 AM (2).jpeg", "IMG-20260628-WA0074.jpg", 
+            "WhatsApp Image 2026-06-25 at 9.20.35 AM.jpeg", "WhatsApp Image 2026-06-25 at 9.01.11 AM.jpeg", 
+            "WhatsApp Image 2026-06-25 at 9.01.51 AM (1).jpeg", "WhatsApp Image 2026-06-25 at 9.35.02 AM (2).jpeg", 
+            "WhatsApp Image 2026-06-25 at 9.01.28 AM.jpeg", "IMG-20260520-WA0061.jpg", 
+            "WhatsApp Image 2026-06-25 at 9.35.17 AM (2).jpeg", "IMG-20260525-WA0056.jpg", 
+            "WhatsApp Image 2026-06-25 at 9.01.14 AM.jpeg", "IMG-20260216-WA0114.jpg", 
+            "IMG-20260520-WA0071.jpg"
         ];
 
         const gallery = document.getElementById('image-gallery');
-        
-        // This loop ensures every image you uploaded is added to the page at original size
         imageFiles.forEach(src => {
             const div = document.createElement('div');
-            div.className = 'img-card';
-            div.innerHTML = `<img src="${src}" alt="Leo Adverts Project">`;
+            div.innerHTML = `<img src="${src}" alt="Portfolio">`;
             gallery.appendChild(div);
         });
 
         function generatePDF() {
-            const element = document.getElementById('portfolio-content');
+            const element = document.getElementById('portfolio');
             const opt = {
-                margin: 0.2,
+                margin: 0.1,
                 filename: 'Leo_Adverts_Complete_Portfolio.pdf',
-                image: { type: 'jpeg', quality: 1.0 }, // Keeps original quality
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+                image: { type: 'jpeg', quality: 1.0 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'a3', orientation: 'portrait' }
             };
             html2pdf().set(opt).from(element).save();
         }
