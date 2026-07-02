@@ -2,66 +2,1150 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Leo Adverts | Professional Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leo Adverts Portfolio</title>
+    <meta
+        name="description"
+        content="Leo Adverts portfolio featuring healthcare branding, corporate interiors, signages, co-sign systems, pylon signs, wall graphics and custom fabrication."
+    >
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body { font-family: 'Helvetica', sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 20px; }
-        .section { margin-bottom: 50px; page-break-inside: avoid; }
-        h1, h2 { color: #e63946; border-bottom: 2px solid #e63946; padding-bottom: 10px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .card { background: #f9f9f9; padding: 10px; border: 1px solid #ddd; }
-        img { width: 100%; height: auto; display: block; }
-        .desc { font-weight: bold; margin-top: 10px; display: block; }
-        .pdf-btn { position: fixed; top: 20px; right: 20px; padding: 20px; background: #e63946; color: white; border: none; cursor: pointer; }
+        :root {
+            --ink: #1c1714;
+            --paper: #f8f1e7;
+            --paper-strong: #fffaf4;
+            --accent: #9e5b36;
+            --accent-soft: rgba(158, 91, 54, 0.14);
+            --muted: #6f665d;
+            --line: rgba(28, 23, 20, 0.12);
+            --shadow: 0 28px 60px rgba(35, 25, 18, 0.12);
+            --radius: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top left, rgba(158, 91, 54, 0.14), transparent 38%),
+                radial-gradient(circle at top right, rgba(113, 127, 112, 0.14), transparent 32%),
+                linear-gradient(180deg, #f3e7d8 0%, #f8f1e7 26%, #fbf7f2 100%);
+            font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+            line-height: 1.65;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .shell {
+            width: min(1280px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .hero {
+            position: relative;
+            padding: 48px 0 28px;
+        }
+
+        .hero-panel {
+            position: relative;
+            overflow: hidden;
+            padding: 56px;
+            border: 1px solid rgba(255, 255, 255, 0.42);
+            border-radius: 36px;
+            background:
+                linear-gradient(135deg, rgba(28, 23, 20, 0.96), rgba(68, 41, 28, 0.92)),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 70%);
+            color: #fff8ef;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-panel::before,
+        .hero-panel::after {
+            content: "";
+            position: absolute;
+            border-radius: 999px;
+            pointer-events: none;
+        }
+
+        .hero-panel::before {
+            width: 280px;
+            height: 280px;
+            top: -140px;
+            right: -72px;
+            background: rgba(233, 196, 132, 0.13);
+        }
+
+        .hero-panel::after {
+            width: 220px;
+            height: 220px;
+            bottom: -120px;
+            left: -80px;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .brand-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            padding: 8px 14px;
+            border: 1px solid rgba(255, 248, 239, 0.16);
+            border-radius: 999px;
+            letter-spacing: 0.08em;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: rgba(255, 248, 239, 0.82);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        p {
+            margin-top: 0;
+        }
+
+        h1 {
+            max-width: 840px;
+            margin-bottom: 18px;
+            font-size: clamp(2.7rem, 6vw, 5.4rem);
+            line-height: 0.96;
+            letter-spacing: -0.04em;
+        }
+
+        .hero-copy {
+            max-width: 780px;
+            margin-bottom: 28px;
+            color: rgba(255, 248, 239, 0.8);
+            font-size: 1.05rem;
+        }
+
+        .hero-notes {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .note-card {
+            padding: 18px;
+            border-radius: 22px;
+            border: 1px solid rgba(255, 248, 239, 0.12);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .note-card strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 1.35rem;
+            color: #fff;
+        }
+
+        .note-card span {
+            color: rgba(255, 248, 239, 0.74);
+            font-size: 0.9rem;
+        }
+
+        .controls {
+            position: sticky;
+            top: 18px;
+            z-index: 20;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin: 0 auto 24px;
+        }
+
+        .action-btn {
+            appearance: none;
+            border: none;
+            border-radius: 999px;
+            background: var(--ink);
+            color: #fff8ef;
+            padding: 14px 22px;
+            font: inherit;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 16px 28px rgba(28, 23, 20, 0.16);
+            transition: transform 0.25s ease, background 0.25s ease, opacity 0.25s ease;
+        }
+
+        .action-btn.secondary {
+            background: rgba(28, 23, 20, 0.08);
+            color: var(--ink);
+            border: 1px solid var(--line);
+            box-shadow: none;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .section {
+            margin-bottom: 34px;
+            padding: 36px;
+            border-radius: var(--radius);
+            background: rgba(255, 250, 244, 0.88);
+            border: 1px solid rgba(28, 23, 20, 0.08);
+            box-shadow: 0 12px 28px rgba(28, 23, 20, 0.05);
+        }
+
+        .section-title {
+            margin-bottom: 14px;
+            font-size: clamp(2rem, 3vw, 3rem);
+            line-height: 1;
+            letter-spacing: -0.04em;
+        }
+
+        .section-lead {
+            max-width: 820px;
+            color: var(--muted);
+        }
+
+        .summary-grid,
+        .project-nav,
+        .footer-grid {
+            display: grid;
+            gap: 18px;
+        }
+
+        .summary-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            margin-top: 22px;
+        }
+
+        .summary-card,
+        .jump-card {
+            padding: 22px;
+            border-radius: 22px;
+            background: var(--paper-strong);
+            border: 1px solid var(--line);
+        }
+
+        .summary-card strong,
+        .jump-card strong {
+            display: block;
+            font-size: 1.65rem;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .summary-card span,
+        .jump-card span {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .project-nav {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            margin-top: 24px;
+        }
+
+        .jump-card {
+            text-decoration: none;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .jump-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(158, 91, 54, 0.35);
+            box-shadow: 0 18px 32px rgba(35, 25, 18, 0.08);
+        }
+
+        .jump-card em {
+            display: inline-block;
+            margin-top: 16px;
+            font-style: normal;
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .project-section {
+            margin: 28px 0 32px;
+            padding: 32px;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.74);
+            border: 1px solid var(--line);
+        }
+
+        .project-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 24px;
+            align-items: flex-start;
+            margin-bottom: 26px;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            border: 1px solid rgba(158, 91, 54, 0.14);
+            font-size: 0.82rem;
+            letter-spacing: 0.02em;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .portfolio-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 18px;
+            border-radius: 22px;
+            background: rgba(255, 250, 244, 0.92);
+            border: 1px solid rgba(28, 23, 20, 0.1);
+            box-shadow: 0 14px 26px rgba(28, 23, 20, 0.05);
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .portfolio-card figure {
+            margin: 0 0 16px;
+            padding: 12px;
+            border-radius: 18px;
+            background: #fff;
+            border: 1px solid rgba(28, 23, 20, 0.08);
+        }
+
+        .portfolio-card img {
+            margin: 0 auto;
+            width: auto;
+            max-width: 100%;
+            border-radius: 12px;
+        }
+
+        .card-topline {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 8px;
+            color: var(--muted);
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .card-title {
+            margin-bottom: 8px;
+            font-size: 1.36rem;
+            line-height: 1.12;
+        }
+
+        .card-copy {
+            margin-bottom: 14px;
+            color: #4f4740;
+            font-size: 0.97rem;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .card-tags span {
+            padding: 7px 11px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            color: var(--muted);
+            background: rgba(28, 23, 20, 0.04);
+            border: 1px solid rgba(28, 23, 20, 0.07);
+        }
+
+        .footnote {
+            margin-top: 20px;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        footer.section {
+            margin-bottom: 56px;
+        }
+
+        .footer-grid {
+            grid-template-columns: 1.4fr 1fr 1fr;
+            margin-top: 22px;
+        }
+
+        .footer-card {
+            padding: 22px;
+            border-radius: 22px;
+            background: rgba(255, 250, 244, 0.9);
+            border: 1px solid var(--line);
+        }
+
+        .footer-card strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .footer-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .status {
+            min-height: 22px;
+            margin: 10px 0 0;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1080px) {
+            .hero-notes,
+            .summary-grid,
+            .gallery-grid,
+            .footer-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .project-head {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .shell {
+                width: calc(100% - 20px);
+            }
+
+            .hero-panel,
+            .section,
+            .project-section {
+                padding: 24px;
+            }
+
+            .controls {
+                position: static;
+                justify-content: stretch;
+                flex-direction: column;
+            }
+
+            .hero-notes,
+            .summary-grid,
+            .gallery-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                line-height: 1.02;
+            }
+        }
+
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 12mm;
+            }
+
+            body {
+                background: #fff;
+            }
+
+            .controls,
+            .status {
+                display: none !important;
+            }
+
+            .hero {
+                padding-top: 0;
+            }
+
+            .section,
+            .project-section,
+            .summary-card,
+            .jump-card,
+            .portfolio-card,
+            .footer-card,
+            .note-card {
+                box-shadow: none !important;
+            }
+
+            .project-section {
+                break-before: page;
+                page-break-before: always;
+            }
+
+            .project-section:first-of-type {
+                break-before: auto;
+                page-break-before: auto;
+            }
+        }
     </style>
 </head>
-<body id="portfolio">
-    <button class="pdf-btn" onclick="generatePDF()">Download Portfolio PDF</button>
+<body>
+    <main id="portfolio-content">
+        <section class="hero">
+            <div class="shell">
+                <div class="hero-panel">
+                    <div class="brand-kicker">Leo Adverts Portfolio</div>
+                    <h1>Project-wise signage, branding and display work presented in one printable portfolio.</h1>
+                    <p class="hero-copy">
+                        This site showcases all available Leo Adverts images in a clean editorial layout. Every image is
+                        visible directly on the page, aspect ratios are preserved without cropping, the first 50 images carry
+                        written descriptions, and the full site can be saved as a multi-page PDF.
+                    </p>
+                    <div class="hero-notes">
+                        <div class="note-card">
+                            <strong id="heroTotalImages">0</strong>
+                            <span>Total images loaded from the folder</span>
+                        </div>
+                        <div class="note-card">
+                            <strong id="heroProjectCount">0</strong>
+                            <span>Project collections arranged section-wise</span>
+                        </div>
+                        <div class="note-card">
+                            <strong>50</strong>
+                            <span>Top images with visible descriptions on the page</span>
+                        </div>
+                        <div class="note-card">
+                            <strong>A4</strong>
+                            <span>Multi-page export ready for download or print</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <h1>Leo Adverts - Project Portfolio</h1>
+        <div class="shell controls">
+            <button class="action-btn" id="downloadPdfBtn">Download PDF</button>
+            <button class="action-btn secondary" id="printBtn">Print / Save PDF</button>
+        </div>
 
-    <div class="section" id="project1">
-        <h2>Corporate Signage & Branding</h2>
-        <p>High-visibility solutions for corporate offices and showrooms.</p>
-        <div class="grid" id="corp-gallery"></div>
-    </div>
+        <section class="shell section">
+            <h2 class="section-title">Portfolio Overview</h2>
+            <p class="section-lead">
+                The image library includes healthcare environments, corporate interiors, co-sign systems, premium room signs,
+                outdoor pylons, wall graphics and fabricated branding assets. The sections below sort the visuals project-wise
+                so the work is easier to review and easier to present.
+            </p>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <strong id="summaryDescribedCount">50</strong>
+                    <span>Images with full descriptions shown directly below the photograph</span>
+                </div>
+                <div class="summary-card">
+                    <strong>Original Aspect</strong>
+                    <span>Images stay visible without cropping or click-to-open lightboxes</span>
+                </div>
+                <div class="summary-card">
+                    <strong>Full HTML</strong>
+                    <span>Everything is generated inside this single HTML file for easy handoff</span>
+                </div>
+                <div class="summary-card">
+                    <strong>PDF Ready</strong>
+                    <span>Page-break aware formatting supports multi-page export</span>
+                </div>
+            </div>
+        </section>
 
-    <div class="section" id="project2">
-        <h2>Retail & Shop Fit-outs</h2>
-        <p>Complete end-to-end retail environment transformation.</p>
-        <div class="grid" id="retail-gallery"></div>
-    </div>
+        <section class="shell section">
+            <h2 class="section-title">Project Index</h2>
+            <p class="section-lead">
+                Jump to any project grouping below. Counts update automatically from the current folder image set.
+            </p>
+            <div class="project-nav" id="projectNav"></div>
+            <p class="footnote">
+                Description coverage is prioritized on the first 50 images in the sorted collection, while the remaining images
+                continue to stay visible with clear project labels and captions.
+            </p>
+        </section>
 
-    <div class="section" id="project3">
-        <h2>3D Letters & Neon Signage</h2>
-        <p>Custom-fabricated premium dimensional signage.</p>
-        <div class="grid" id="sign-gallery"></div>
-    </div>
+        <section class="shell" id="projectsContainer"></section>
+
+        <footer class="shell section">
+            <h2 class="section-title">Contact</h2>
+            <p class="section-lead">
+                Leo Adverts delivers signage, wall graphics, branding systems and display fabrication for retail, healthcare,
+                offices and public-facing environments.
+            </p>
+            <div class="footer-grid">
+                <div class="footer-card">
+                    <strong>What This Portfolio Covers</strong>
+                    <p>Healthcare branding and wayfinding, co-signs, room signs, door signage, pylon signs, corporate interiors, wall graphics and premium feature boards.</p>
+                </div>
+                <div class="footer-card">
+                    <strong>Reach Us</strong>
+                    <p><strong>Phone:</strong> +91 9156947042</p>
+                    <p><strong>Email:</strong> info@leoadverts.in</p>
+                    <p><strong>Website:</strong> <a href="https://leoadverts.in" target="_blank" rel="noreferrer">leoadverts.in</a></p>
+                </div>
+                <div class="footer-card">
+                    <strong>Locations</strong>
+                    <p>Head Office: Pune - PCMC</p>
+                    <p>Factory: Jejuri, Pune</p>
+                    <p>Turnaround-focused execution for project presentation and print-ready portfolio sharing.</p>
+                </div>
+            </div>
+            <p class="status" id="statusMessage" aria-live="polite"></p>
+        </footer>
+    </main>
 
     <script>
-        // Sort your 74 images into these arrays
-        const corpImages = ["IMG-20260623-WA0051.jpg", "WhatsApp Image 2026-06-25 at 9.01.34 AM.jpeg", "WhatsApp Image 2026-06-25 at 9.01.30 AM.jpeg"];
-        const retailImages = ["WhatsApp Image 2026-06-25 at 9.01.20 AM.jpeg", "IMG-20260419-WA0014.jpg", "WhatsApp Image 2026-06-25 at 9.20.26 AM.jpeg"];
-        const signImages = ["IMG-20260511-WA0049.jpg", "IMG-20251226-WA0092.jpg", "IMG-20260216-WA0118.jpg"];
+        const imageFiles = [
+            "IMG-20250719-WA0017(1).jpg",
+            "IMG-20251208-WA0031.jpg",
+            "IMG-20251226-WA0092.jpg",
+            "IMG-20251226-WA0147.jpg",
+            "IMG-20260111-WA0074.jpg",
+            "IMG-20260111-WA0078.jpg",
+            "IMG-20260111-WA0079.jpg",
+            "IMG-20260216-WA0114.jpg",
+            "IMG-20260216-WA0118.jpg",
+            "IMG-20260216-WA0119.jpg",
+            "IMG-20260216-WA0120.jpg",
+            "IMG-20260216-WA0125.jpg",
+            "IMG-20260216-WA0139.jpg",
+            "IMG-20260216-WA0146.jpg",
+            "IMG-20260216-WA0148.jpg",
+            "IMG-20260216-WA0165.jpg",
+            "IMG-20260216-WA0166.jpg",
+            "IMG-20260216-WA0167.jpg",
+            "IMG-20260216-WA0169.jpg",
+            "IMG-20260217-WA0036.jpg",
+            "IMG-20260217-WA0037.jpg",
+            "IMG-20260217-WA0039.jpg",
+            "IMG-20260217-WA0055.jpg",
+            "IMG-20260217-WA0057.jpg",
+            "IMG-20260217-WA0058.jpg",
+            "IMG-20260217-WA0059.jpg",
+            "IMG-20260217-WA0067.jpg",
+            "IMG-20260217-WA0068.jpg",
+            "IMG-20260418-WA0007(1).jpg",
+            "IMG-20260418-WA0063.jpg",
+            "IMG-20260418-WA0069.jpg",
+            "IMG-20260419-WA0014.jpg",
+            "IMG-20260419-WA0015.jpg",
+            "IMG-20260511-WA0027.jpg",
+            "IMG-20260511-WA0028.jpg",
+            "IMG-20260511-WA0030(1).jpg",
+            "IMG-20260511-WA0030.jpg",
+            "IMG-20260511-WA0031.jpg",
+            "IMG-20260511-WA0032.jpg",
+            "IMG-20260511-WA0034.jpg",
+            "IMG-20260511-WA0035.jpg",
+            "IMG-20260511-WA0036.jpg",
+            "IMG-20260511-WA0037.jpg",
+            "IMG-20260511-WA0040(1).jpg",
+            "IMG-20260511-WA0042.jpg",
+            "IMG-20260511-WA0048.jpg",
+            "IMG-20260511-WA0049.jpg",
+            "IMG-20260511-WA0051.jpg",
+            "IMG-20260511-WA0052.jpg",
+            "IMG-20260520-WA0050.jpg",
+            "IMG-20260520-WA0058.jpg",
+            "IMG-20260520-WA0059.jpg",
+            "IMG-20260520-WA0061.jpg",
+            "IMG-20260520-WA0062.jpg",
+            "IMG-20260520-WA0071.jpg",
+            "IMG-20260520-WA0074.jpg",
+            "IMG-20260520-WA0079.jpg",
+            "IMG-20260520-WA0090.jpg",
+            "IMG-20260520-WA0093.jpg",
+            "IMG-20260520-WA0100.jpg",
+            "IMG-20260520-WA0102.jpg",
+            "IMG-20260525-WA0051.jpg",
+            "IMG-20260525-WA0052.jpg",
+            "IMG-20260525-WA0056.jpg",
+            "IMG-20260525-WA0058.jpg",
+            "IMG-20260525-WA0060.jpg",
+            "IMG-20260525-WA0063.jpg",
+            "IMG-20260614-WA0030.jpg",
+            "IMG-20260622-WA0075.jpg",
+            "IMG-20260623-WA0051.jpg",
+            "IMG-20260628-WA0073.jpg",
+            "IMG-20260628-WA0074.jpg",
+            "IMG-20260628-WA0075.jpg"
+        ];
 
-        function renderGallery(arr, elementId, desc) {
-            const container = document.getElementById(elementId);
-            arr.forEach(src => {
-                const div = document.createElement('div');
-                div.className = 'card';
-                div.innerHTML = `<img src="${src}" alt="Portfolio"><span class="desc">${desc}</span>`;
-                container.appendChild(div);
-            });
+        const projectInfo = {
+            healthcareBranding: {
+                name: "Healthcare Branding & Wayfinding",
+                shortName: "Healthcare",
+                type: "Signages",
+                intro: "Hospitals and clinical environments need calm, readable, trustworthy graphics. This group includes room signs, bilingual direction systems, wall messaging, department branding and patient-facing visual installations.",
+                anchor: "project-healthcare"
+            },
+            corporateInteriors: {
+                name: "Corporate Interiors & Wall Graphics",
+                shortName: "Interiors",
+                type: "Brand Walls",
+                intro: "Interior branding that combines reception walls, material displays and framed graphics to turn workspaces into branded environments with immediate visual identity.",
+                anchor: "project-corporate"
+            },
+            directorySystems: {
+                name: "Nameplates, Room Signs & Directory Systems",
+                shortName: "Nameplates",
+                type: "Co-signs",
+                intro: "A focused set of cabin plates, executive name signs, restroom markers, department directories and small-format wayfinding pieces designed for everyday usability and brand consistency.",
+                anchor: "project-directory"
+            },
+            featureSignage: {
+                name: "Feature Signage & Premium Boards",
+                shortName: "Feature Boards",
+                type: "Premium Signage",
+                intro: "Large visual statements such as suspended wayfinding, premium illuminated boards, statement plaques and feature signs that demand strong finish quality and high visibility.",
+                anchor: "project-feature"
+            },
+            outdoorPylons: {
+                name: "Outdoor Totems & Exterior Signage",
+                shortName: "Outdoor",
+                type: "Outdoor Signage",
+                intro: "Freestanding exterior pieces, approach signs and directional pylons built for visibility, weather exposure and clear movement guidance in public-facing spaces.",
+                anchor: "project-outdoor"
+            }
+        };
+
+        const featuredDetails = {
+            "IMG-20250719-WA0017(1).jpg": {
+                title: "Restroom Direction Plaque",
+                description: "A compact directional restroom sign executed with a restrained finish, proving how even a small-format wayfinding plate can add clarity and polish to a finished interior."
+            },
+            "IMG-20251208-WA0031.jpg": {
+                title: "Bilingual Private Room Sign",
+                description: "This corridor view shows bilingual over-door signages sized for instant readability, helping hospital visitors navigate with confidence in a clean and orderly environment."
+            },
+            "IMG-20251226-WA0092.jpg": {
+                title: "Hospital Exterior Identity",
+                description: "The building frontage presents a clear institutional identity, combining facade branding and architectural visibility to establish presence before visitors enter the premises."
+            },
+            "IMG-20251226-WA0147.jpg": {
+                title: "Door Control Sign Set",
+                description: "A neatly fabricated batch of push and pull indicators demonstrates repeatable production quality for high-use door hardware and cabin identification systems."
+            },
+            "IMG-20260111-WA0074.jpg": {
+                title: "Nurse Station Communication Wall",
+                description: "Large-format patient communication graphics bring warmth to the reception zone while strengthening the healthcare brand tone in a high-traffic care environment."
+            },
+            "IMG-20260111-WA0078.jpg": {
+                title: "Pharmacy Entrance Glass Graphic",
+                description: "Printed entrance graphics transform a plain glass opening into a branded pharmacy interface that remains visible, welcoming and easy to identify from a distance."
+            },
+            "IMG-20260111-WA0079.jpg": {
+                title: "Care Promise Wall Panel",
+                description: "A bold visual message wall helps reinforce brand values while turning a functional passage area into an emotionally engaging patient-facing surface."
+            },
+            "IMG-20260216-WA0114.jpg": {
+                title: "Clinical Corridor Graphic",
+                description: "This installation carries healthcare messaging into circulation areas, using clean placement and balanced scale to animate an otherwise neutral corridor wall."
+            },
+            "IMG-20260216-WA0118.jpg": {
+                title: "Patient Support Message Board",
+                description: "The patient support panel uses a calm palette and direct language to deliver reassurance while maintaining a polished corporate-healthcare aesthetic."
+            },
+            "IMG-20260216-WA0119.jpg": {
+                title: "Healthcare Information Wall",
+                description: "A large visual information surface helps articulate service messaging in an approachable way, pairing healthcare communication with durable print execution."
+            },
+            "IMG-20260216-WA0120.jpg": {
+                title: "Consultation Zone Branding",
+                description: "Branded graphics in this area give the consultation space a more unified identity, improving spatial recognition for visitors and staff alike."
+            },
+            "IMG-20260216-WA0125.jpg": {
+                title: "Outpatient Room Identification",
+                description: "A focused room-identification setup keeps navigation simple while matching the overall healthcare branding system used across the facility."
+            },
+            "IMG-20260216-WA0139.jpg": {
+                title: "Bilingual Specialist Plate",
+                description: "The panel reflects practical multilingual wayfinding for professional settings, using clean typography and clear alignment to support quick reading."
+            },
+            "IMG-20260216-WA0146.jpg": {
+                title: "Department Navigation Strip",
+                description: "This directional strip extends the visual system deeper into the project, demonstrating how small signage pieces maintain consistency across multiple touchpoints."
+            },
+            "IMG-20260216-WA0148.jpg": {
+                title: "Patient Journey Wall Graphic",
+                description: "A large branded graphic turns the wall into a storytelling surface, creating a more reassuring atmosphere for people moving through the medical space."
+            },
+            "IMG-20260216-WA0165.jpg": {
+                title: "Doctor Cabin Branding Panel",
+                description: "The cabin-area graphic balances information and visual softness, helping clinical rooms feel more organized and more human at the same time."
+            },
+            "IMG-20260216-WA0166.jpg": {
+                title: "Journey to Parenthood Wall Panel",
+                description: "This maternity-focused visual panel combines branded storytelling and interior finishing to give the corridor a purpose-built identity."
+            },
+            "IMG-20260216-WA0167.jpg": {
+                title: "Hospital Corridor Visual Identity",
+                description: "A corridor branding element like this creates continuity from one department to another, turning circulation zones into a cohesive branded experience."
+            },
+            "IMG-20260216-WA0169.jpg": {
+                title: "Health Facility Direction System",
+                description: "The installation shows how navigation, messaging and wall branding can work together as one integrated system rather than separate sign pieces."
+            },
+            "IMG-20260217-WA0036.jpg": {
+                title: "Reception Poster Installation",
+                description: "A reception-facing poster panel adds visual interest at the arrival point while strengthening the identity and messaging of the clinical environment."
+            },
+            "IMG-20260217-WA0037.jpg": {
+                title: "Clinical Service Wall Branding",
+                description: "This wall branding piece supports wayfinding and communication in a single move, helping users understand the setting while enhancing the ambience."
+            },
+            "IMG-20260217-WA0039.jpg": {
+                title: "Patient Communication Graphic",
+                description: "The graphic demonstrates large-format print use in healthcare, pairing approachable visuals with a neatly integrated installation approach."
+            },
+            "IMG-20260217-WA0055.jpg": {
+                title: "Panoramic Landscape Wall Mural",
+                description: "A wide scenic mural changes the mood of the room instantly, proving how printed environmental graphics can make institutional spaces feel more open and inviting."
+            },
+            "IMG-20260217-WA0057.jpg": {
+                title: "Counselling Room Story Wall",
+                description: "This visual treatment transforms a plain wall into a calmer experience zone, creating a softer brand-led backdrop for patient interaction areas."
+            },
+            "IMG-20260217-WA0058.jpg": {
+                title: "Support Space Graphic Panel",
+                description: "The graphic panel is designed to add atmosphere without crowding the room, using scale and color to elevate an otherwise functional medical space."
+            },
+            "IMG-20260217-WA0059.jpg": {
+                title: "Mounted Photo Presentation Wall",
+                description: "A multi-piece photo display demonstrates fabrication precision and installation balance, ideal for offices, labs and brand storytelling walls."
+            },
+            "IMG-20260217-WA0067.jpg": {
+                title: "Doctor Room Signage Package",
+                description: "Room labeling across treatment zones remains crisp and consistent, helping visitors find the right destination with minimal friction."
+            },
+            "IMG-20260217-WA0068.jpg": {
+                title: "Clinical Room Marker",
+                description: "A clean room marker like this supports everyday navigation while preserving the overall design language of the project."
+            },
+            "IMG-20260418-WA0007(1).jpg": {
+                title: "JNK Sample & Material Display",
+                description: "A material showcase wall communicates surface options and fabrication capability in a way that feels both curated and client-ready."
+            },
+            "IMG-20260418-WA0063.jpg": {
+                title: "Corporate Photo Gallery Wall",
+                description: "Mounted photo frames convert a conference room wall into a visual case study, blending decor and brand narrative in one installation."
+            },
+            "IMG-20260418-WA0069.jpg": {
+                title: "Acrylic Sheet Showcase Wall",
+                description: "The grid of sample panels highlights finish variety and fabrication discipline, turning a meeting space into a subtle demonstration environment."
+            },
+            "IMG-20260419-WA0014.jpg": {
+                title: "Industrial Installation Story Wall",
+                description: "A project storytelling wall like this gives visitors a quick visual understanding of the brand's technical work and built capabilities."
+            },
+            "IMG-20260419-WA0015.jpg": {
+                title: "Conference Room Branding Scheme",
+                description: "The conference room treatment blends logo presence, project visuals and material display into one cohesive branded interior experience."
+            },
+            "IMG-20260511-WA0027.jpg": {
+                title: "Minimal Gents Marker",
+                description: "This room sign relies on strong icon clarity and restrained styling, showing how small-format signage can still feel premium and well resolved."
+            },
+            "IMG-20260511-WA0028.jpg": {
+                title: "Washroom Identification Plaque",
+                description: "A simple identification plaque with clean edges and balanced spacing offers reliable legibility while fitting into a refined interior palette."
+            },
+            "IMG-20260511-WA0030(1).jpg": {
+                title: "Department Directory Board",
+                description: "The stacked listing format keeps multiple names readable in a compact footprint, making it ideal for specialist departments and shared spaces."
+            },
+            "IMG-20260511-WA0030.jpg": {
+                title: "Desk Nameplate Fabrication",
+                description: "This name sign demonstrates sharp print output, tidy framing and a layout that feels formal enough for executive or professional use."
+            },
+            "IMG-20260511-WA0031.jpg": {
+                title: "Pathology Team Directory",
+                description: "A comprehensive department board like this supports both navigation and professional identity, especially where several specialists share one zone."
+            },
+            "IMG-20260511-WA0032.jpg": {
+                title: "Room Branding Strip",
+                description: "The narrow format proves useful for door-side labeling, delivering clarity without taking over the surrounding wall or frame."
+            },
+            "IMG-20260511-WA0034.jpg": {
+                title: "Department Door Sign",
+                description: "Placed at a key decision point, this sign shows how direct labeling can reduce hesitation and make circulation more intuitive."
+            },
+            "IMG-20260511-WA0035.jpg": {
+                title: "Square Wayfinding Plaque",
+                description: "Compact plaques like this are effective for room numbering, icons and secondary directions while keeping the visual system consistent."
+            },
+            "IMG-20260511-WA0036.jpg": {
+                title: "Executive Nameplate System",
+                description: "The nameplate system combines professional typography and practical fabrication for desks, cabins and visitor-facing office points."
+            },
+            "IMG-20260511-WA0037.jpg": {
+                title: "Consultant Identity Strip",
+                description: "A slim horizontal name strip keeps identity information crisp and visible, especially in corridors where quick reading matters."
+            },
+            "IMG-20260511-WA0040(1).jpg": {
+                title: "Tabletop Name Sign",
+                description: "This tabletop unit balances sturdy construction with a clean front-face presentation, suitable for lobbies, desks and formal office setups."
+            },
+            "IMG-20260511-WA0042.jpg": {
+                title: "Room Number Navigation Tile",
+                description: "A small navigation tile shows the value of disciplined spacing, helping every room marker feel like part of a bigger, organized system."
+            },
+            "IMG-20260511-WA0048.jpg": {
+                title: "Executive Desk Display",
+                description: "The desk display uses confident typography and a firm frame profile to deliver a professional presence at close viewing distance."
+            },
+            "IMG-20260511-WA0049.jpg": {
+                title: "CEO Table Nameplate",
+                description: "This piece highlights polished tabletop signage that reinforces hierarchy and identity in a professional reception or meeting environment."
+            },
+            "IMG-20260511-WA0051.jpg": {
+                title: "Custom Identity Marker",
+                description: "A compact identity sign like this is well suited to cabins or departments where a refined branded marker is needed without visual clutter."
+            },
+            "IMG-20260511-WA0052.jpg": {
+                title: "Door-side Project Plate",
+                description: "This plate shows small-format fabrication designed for repeated deployment, keeping quality consistent across multiple rooms or facilities."
+            },
+            "IMG-20260520-WA0050.jpg": {
+                title: "Suspended Mall Wayfinding Sign",
+                description: "The suspended wayfinding board demonstrates strong visibility across a large commercial volume, guiding movement cleanly above circulation paths."
+            }
+        };
+
+        function getProjectKey(fileName) {
+            if (/^IMG-(20251208|20251226|20260111|20260216|20260217|20260622|20260628)/.test(fileName)) {
+                return "healthcareBranding";
+            }
+            if (/^IMG-(20260418|20260419|20260614)/.test(fileName)) {
+                return "corporateInteriors";
+            }
+            if (/^IMG-(20250719|20260511|20260623)/.test(fileName)) {
+                return "directorySystems";
+            }
+            if (/^IMG-20260520/.test(fileName)) {
+                return "featureSignage";
+            }
+            return "outdoorPylons";
         }
 
-        renderGallery(corpImages, 'corp-gallery', 'Corporate Exterior Branding');
-        renderGallery(retailImages, 'retail-gallery', 'Interior Shop Setup');
-        renderGallery(signImages, 'sign-gallery', 'Custom 3D Lettering');
+        function prettifyFallbackTitle(fileName, projectName, projectIndex) {
+            const genericByProject = {
+                healthcareBranding: [
+                    "Healthcare Signage Detail",
+                    "Clinical Branding Installation",
+                    "Patient Guidance Graphic",
+                    "Department Signage View"
+                ],
+                corporateInteriors: [
+                    "Corporate Branding Detail",
+                    "Interior Wall Graphic",
+                    "Reception Identity Feature",
+                    "Workspace Brand Installation"
+                ],
+                directorySystems: [
+                    "Nameplate Detail",
+                    "Directory Signage View",
+                    "Room Signage Piece",
+                    "Identity Plate Installation"
+                ],
+                featureSignage: [
+                    "Premium Signage Feature",
+                    "Statement Board Installation",
+                    "Wayfinding Structure",
+                    "Feature Sign Detail"
+                ],
+                outdoorPylons: [
+                    "Outdoor Signage Feature",
+                    "Freestanding Totem View",
+                    "External Direction Sign",
+                    "Exterior Branding Piece"
+                ]
+            };
 
-        function generatePDF() {
-            const element = document.getElementById('portfolio');
-            html2pdf(element, { filename: 'Leo_Adverts_Portfolio.pdf', image: { type: 'jpeg', quality: 1.0 }, jsPDF: { format: 'a3', orientation: 'portrait' } });
+            const sequence = genericByProject[projectName];
+            return sequence[(projectIndex - 1) % sequence.length] + " " + projectIndex;
         }
+
+        function fallbackDescription(projectKey) {
+            const descriptions = {
+                healthcareBranding: "This image documents a healthcare-focused signage or branding element designed to improve navigation, readability and overall environmental confidence.",
+                corporateInteriors: "This image highlights a branded interior or visual wall treatment that helps the space feel more complete, more memorable and more client-ready.",
+                directorySystems: "This image captures a small-format nameplate or wayfinding component where accuracy, readability and repeated fabrication quality matter most.",
+                featureSignage: "This image shows a premium statement sign or high-visibility direction element built to stand out in a larger architectural or commercial setting.",
+                outdoorPylons: "This image documents exterior signage designed for distance visibility, directional clarity and durable on-site presence."
+            };
+            return descriptions[projectKey];
+        }
+
+        const projectCounters = {};
+        const items = imageFiles.map((file, index) => {
+            const projectKey = getProjectKey(file);
+            projectCounters[projectKey] = (projectCounters[projectKey] || 0) + 1;
+            const manual = featuredDetails[file];
+            const project = projectInfo[projectKey];
+
+            return {
+                file,
+                projectKey,
+                projectName: project.name,
+                projectType: project.type,
+                anchor: project.anchor,
+                order: index + 1,
+                described: index < 50,
+                title: manual ? manual.title : prettifyFallbackTitle(file, projectKey, projectCounters[projectKey]),
+                description: manual ? manual.description : fallbackDescription(projectKey)
+            };
+        });
+
+        const grouped = Object.keys(projectInfo).map((key) => ({
+            key,
+            ...projectInfo[key],
+            items: items.filter((item) => item.projectKey === key)
+        })).filter((group) => group.items.length > 0);
+
+        function renderProjectNav() {
+            const nav = document.getElementById("projectNav");
+            nav.innerHTML = grouped.map((group) => {
+                const describedCount = group.items.filter((item) => item.described).length;
+                return `
+                    <a class="jump-card" href="#${group.anchor}">
+                        <strong>${group.items.length}</strong>
+                        <span>${group.name}</span>
+                        <em>${group.type} · ${describedCount} described</em>
+                    </a>
+                `;
+            }).join("");
+        }
+
+        function renderProjects() {
+            const container = document.getElementById("projectsContainer");
+            container.innerHTML = grouped.map((group) => `
+                <section class="project-section" id="${group.anchor}">
+                    <div class="project-head">
+                        <div>
+                            <h2 class="section-title">${group.name}</h2>
+                            <p class="section-lead">${group.intro}</p>
+                        </div>
+                        <div class="project-meta">
+                            <span class="chip">${group.type}</span>
+                            <span class="chip">${group.items.length} images</span>
+                            <span class="chip">${group.items.filter((item) => item.described).length} described items</span>
+                        </div>
+                    </div>
+                    <div class="gallery-grid">
+                        ${group.items.map((item) => `
+                            <article class="portfolio-card">
+                                <figure>
+                                    <img src="${item.file}" alt="${item.title}">
+                                </figure>
+                                <div class="card-topline">
+                                    <span>Image ${item.order}</span>
+                                    <span>${item.described ? "Top 50 description" : "Portfolio image"}</span>
+                                </div>
+                                <h3 class="card-title">${item.title}</h3>
+                                <p class="card-copy">${item.description}</p>
+                                <div class="card-tags">
+                                    <span>${group.shortName}</span>
+                                    <span>${group.type}</span>
+                                    <span>${item.file}</span>
+                                </div>
+                            </article>
+                        `).join("")}
+                    </div>
+                </section>
+            `).join("");
+        }
+
+        function updateSummary() {
+            document.getElementById("heroTotalImages").textContent = String(items.length);
+            document.getElementById("heroProjectCount").textContent = String(grouped.length);
+            document.getElementById("summaryDescribedCount").textContent = String(items.filter((item) => item.described).length);
+        }
+
+        async function waitForImages() {
+            const images = Array.from(document.querySelectorAll("img"));
+            await Promise.all(images.map((img) => {
+                if (img.complete) {
+                    return Promise.resolve();
+                }
+                return new Promise((resolve) => {
+                    img.addEventListener("load", resolve, { once: true });
+                    img.addEventListener("error", resolve, { once: true });
+                });
+            }));
+        }
+
+        function setStatus(message) {
+            document.getElementById("statusMessage").textContent = message;
+        }
+
+        async function downloadPdf() {
+            const button = document.getElementById("downloadPdfBtn");
+            button.disabled = true;
+            button.style.opacity = "0.72";
+            setStatus("Preparing images and building your PDF...");
+
+            await waitForImages();
+
+            if (window.html2pdf) {
+                const target = document.getElementById("portfolio-content");
+                const options = {
+                    margin: 0.35,
+                    filename: "Leo-Adverts-Portfolio.pdf",
+                    image: { type: "jpeg", quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+                    jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+                    pagebreak: { mode: ["css", "legacy"] }
+                };
+
+                try {
+                    await window.html2pdf().set(options).from(target).save();
+                    setStatus("PDF downloaded successfully.");
+                } catch (error) {
+                    console.error(error);
+                    setStatus("Automatic download failed. Use Print / Save PDF as a fallback.");
+                }
+            } else {
+                setStatus("PDF library unavailable in this browser, opening print dialog instead.");
+                window.print();
+            }
+
+            button.disabled = false;
+            button.style.opacity = "1";
+        }
+
+        document.getElementById("downloadPdfBtn").addEventListener("click", downloadPdf);
+        document.getElementById("printBtn").addEventListener("click", () => {
+            setStatus("Opening print layout. Choose Save as PDF for a multi-page file.");
+            window.print();
+        });
+
+        renderProjectNav();
+        renderProjects();
+        updateSummary();
+        setStatus("Portfolio ready. All images are visible directly on the page.");
     </script>
 </body>
 </html>
