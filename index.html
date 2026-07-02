@@ -513,29 +513,32 @@
         <section class="hero">
             <div class="shell">
                 <div class="hero-panel">
-                    <div class="brand-kicker">Leo Adverts Portfolio</div>
-                    <h1>Project-wise signage, branding and display work presented in one printable portfolio.</h1>
+                    <div class="brand-kicker">About Leo Adverts</div>
+                    <h1>From signboards to complete storefronts, across India.</h1>
                     <p class="hero-copy">
-                        This site showcases all available Leo Adverts images in a clean editorial layout. Every image is
-                        visible directly on the page, aspect ratios are preserved without cropping, the first 50 images carry
-                        written descriptions, and the full site can be saved as a multi-page PDF.
+                        Leo Adverts is a Pune-headquartered signage and shop-setup partner serving retail and corporate
+                        clients across India. The team handles the full journey from concept to installation — indoor
+                        and outdoor signage, large-format digital printing, branded retail interiors, and custom 3D
+                        letters and logos — backed by an in-house production facility at Jejuri, Pune. Leo Adverts has
+                        worked with brands including Havells, Berger Paints, ICICI Bank, Bharat Forge, Maruti Suzuki
+                        and Renault. The pages below present recent project work organised by category.
                     </p>
                     <div class="hero-notes">
                         <div class="note-card">
-                            <strong id="heroTotalImages">0</strong>
-                            <span>Total images loaded from the folder</span>
+                            <strong>500+</strong>
+                            <span>Projects delivered</span>
                         </div>
                         <div class="note-card">
-                            <strong id="heroProjectCount">0</strong>
-                            <span>Project collections arranged section-wise</span>
+                            <strong>50+</strong>
+                            <span>Cities covered pan-India</span>
                         </div>
                         <div class="note-card">
-                            <strong>50</strong>
-                            <span>Top images with visible descriptions on the page</span>
+                            <strong>15+</strong>
+                            <span>Years of experience</span>
                         </div>
                         <div class="note-card">
-                            <strong>A4</strong>
-                            <span>Multi-page export ready for download or print</span>
+                            <strong>99%</strong>
+                            <span>Customer satisfaction</span>
                         </div>
                     </div>
                 </div>
@@ -548,28 +551,29 @@
         </div>
 
         <section class="shell section">
-            <h2 class="section-title">Portfolio Overview</h2>
+            <h2 class="section-title">What We Do</h2>
             <p class="section-lead">
-                The image library includes healthcare environments, corporate interiors, co-sign systems, premium room signs,
-                outdoor pylons, wall graphics and fabricated branding assets. The sections below sort the visuals project-wise
-                so the work is easier to review and easier to present.
+                Leo Adverts runs an in-house production setup — eco-solvent and HP latex printers, UV flatbed printers,
+                fiber laser and SS laser welding, letter bending machines, multi-purpose routers and laser cutting
+                equipment — which keeps fabrication, printing and installation under one roof for faster turnaround
+                and consistent quality across projects of any scale.
             </p>
             <div class="summary-grid">
                 <div class="summary-card">
-                    <strong id="summaryDescribedCount">50</strong>
-                    <span>Images with full descriptions shown directly below the photograph</span>
+                    <strong>Signage</strong>
+                    <span>Backlit boards, LED frame light boxes, neon LED letters, acrylic/SS boards, modular signage and name plates</span>
                 </div>
                 <div class="summary-card">
-                    <strong>Original Aspect</strong>
-                    <span>Images stay visible without cropping or click-to-open lightboxes</span>
+                    <strong>Digital Printing</strong>
+                    <span>Banners, flex printing, large-format prints, posters and vehicle wraps</span>
                 </div>
                 <div class="summary-card">
-                    <strong>Full HTML</strong>
-                    <span>Everything is generated inside this single HTML file for easy handoff</span>
+                    <strong>Retail Interiors</strong>
+                    <span>Branded interiors, display units, shop setup and space planning</span>
                 </div>
                 <div class="summary-card">
-                    <strong>PDF Ready</strong>
-                    <span>Page-break aware formatting supports multi-page export</span>
+                    <strong>3D Letters & Logos</strong>
+                    <span>Premium acrylic letters, channel letters, metal signage and custom logo installations</span>
                 </div>
             </div>
         </section>
@@ -1079,9 +1083,7 @@
         }
 
         function updateSummary() {
-            document.getElementById("heroTotalImages").textContent = String(items.length);
-            document.getElementById("heroProjectCount").textContent = String(grouped.length);
-            document.getElementById("summaryDescribedCount").textContent = String(items.filter((item) => item.described).length);
+            // Summary stats replaced with company info; counters no longer displayed in hero.
         }
 
         async function waitForImages() {
