@@ -2,81 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Leo Adverts Portfolio</title>
+    <title>Leo Adverts | Professional Portfolio</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body { font-family: sans-serif; padding: 20px; background: #fff; }
-        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 20px; }
-        img { width: 100%; height: auto; display: block; border: 1px solid #ddd; }
-        .pdf-btn { 
-            position: fixed; top: 20px; right: 20px; padding: 20px 40px; 
-            background: #e63946; color: white; border: none; 
-            font-size: 20px; cursor: pointer; border-radius: 50px; z-index: 1000;
-        }
+        body { font-family: 'Helvetica', sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 20px; }
+        .section { margin-bottom: 50px; page-break-inside: avoid; }
+        h1, h2 { color: #e63946; border-bottom: 2px solid #e63946; padding-bottom: 10px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: #f9f9f9; padding: 10px; border: 1px solid #ddd; }
+        img { width: 100%; height: auto; display: block; }
+        .desc { font-weight: bold; margin-top: 10px; display: block; }
+        .pdf-btn { position: fixed; top: 20px; right: 20px; padding: 20px; background: #e63946; color: white; border: none; cursor: pointer; }
     </style>
 </head>
 <body id="portfolio">
-    <h1>Leo Adverts - Complete Portfolio</h1>
-    <div class="gallery" id="image-gallery"></div>
     <button class="pdf-btn" onclick="generatePDF()">Download Portfolio PDF</button>
 
-    <script>
-        // ADD ALL YOUR FILENAMES HERE EXACTLY AS THEY ARE NAMED ON YOUR COMPUTER
-        const imageFiles = [
-            "IMG-20260623-WA0051.jpg", "WhatsApp Image 2026-06-25 at 9.35.16 AM (1).jpeg", 
-            "WhatsApp Image 2026-06-25 at 9.35.30 AM.jpeg", "WhatsApp Image 2026-06-25 at 9.35.17 AM.jpeg", 
-            "WhatsApp Image 2026-06-25 at 9.01.15 AM.jpeg", "WhatsApp Image 2026-06-25 at 9.35.21 AM (1).jpeg", 
-            "IMG-20260622-WA0075.jpg", "WhatsApp Image 2026-06-25 at 9.20.30 AM (2).jpeg", 
-            "WhatsApp Image 2026-06-25 at 9.01.30 AM.jpeg", "IMG-20260216-WA0166.jpg", 
-            "IMG-20260216-WA0169.jpg", "IMG-20260511-WA0035.jpg", "WhatsApp Image 2026-06-25 at 9.01.08 AM.jpeg", 
-            "IMG-20260419-WA0014.jpg", "IMG-20260520-WA0059.jpg", "IMG-20260216-WA0148.jpg", 
-            "WhatsApp Image 2026-06-25 at 9.35.28 AM.jpeg", "IMG-20260511-WA0028.jpg", 
-            "WhatsApp Image 2026-06-25 at 9.01.20 AM.jpeg", "IMG-20260525-WA0060.jpg", 
-            "WhatsApp Image 2026-06-25 at 9.35.01 AM (1).jpeg", "WhatsApp Image 2026-06-25 at 9.20.30 AM.jpeg", 
-            "WhatsApp Image 2026-06-25 at 9.35.29 AM (2).jpg", "WhatsApp Image 2026-06-25 at 9.35.16 AM.jpeg", 
-            "WhatsApp Image 2026-06-25 at 9.20.26 AM.jpeg", "IMG-20260511-WA0052.jpg", 
-            "WhatsApp Image 2026-06-25 at 9.35.00 AM.jpeg", "WhatsApp Image 2026-06-25 at 9.20.26 AM (1).jpeg", 
-            "IMG-20260511-WA0051.jpg", "WhatsApp Image 2026-06-25 at 9.20.20 AM.jpeg", "IMG-20260628-WA0075.jpg", 
-            "WhatsApp Image 2026-06-25 at 9.20.23 AM.jpeg", "IMG-20260511-WA0049.jpg", 
-            "WhatsApp Image 2026-06-25 at 9.20.27 AM (1).jpeg", "WhatsApp Image 2026-06-25 at 9.35.00 AM (1).jpeg", 
-            "IMG-20260216-WA0118.jpg", "WhatsApp Image 2026-06-25 at 9.35.12 AM (2).jpeg", 
-            "WhatsApp Image 2026-06-25 at 9.20.19 AM (1).jpeg", "IMG-20260520-WA0102.jpg", 
-            "WhatsApp Image 2026-06-25 at 9.35.12 AM (3).jpeg", "IMG-20260217-WA0059.jpg", 
-            "IMG-20260525-WA0063.jpg", "WhatsApp Image 2026-06-25 at 9.01.34 AM.jpeg", 
-            "WhatsApp Image 2026-06-25 at 9.35.28 AM (2).jpeg", "IMG-20260511-WA0037.jpg", 
-            "WhatsApp Image 2026-06-25 at 9.35.21 AM.jpeg", "IMG-20260520-WA0100.jpg", 
-            "IMG-20260111-WA0078.jpg", "IMG-20260511-WA0034.jpg", "WhatsApp Image 2026-06-25 at 9.20.30 AM (1).jpeg", 
-            "IMG-20260216-WA0167.jpg", "WhatsApp Image 2026-06-25 at 9.35.28 AM (1).jpeg", 
-            "IMG-20260217-WA0055.jpg", "WhatsApp Image 2026-06-25 at 9.01.15 AM (1).jpeg", 
-            "WhatsApp Image 2026-06-25 at 9.35.22 AM.jpeg", "WhatsApp Image 2026-06-25 at 9.01.13 AM.jpeg", 
-            "IMG-20260511-WA0030.jpg", "WhatsApp Image 2026-06-25 at 9.35.07 AM.jpeg", 
-            "IMG-20260520-WA0050.jpg", "WhatsApp Image 2026-06-25 at 9.34.53 AM.jpeg", 
-            "WhatsApp Image 2026-06-25 at 9.35.11 AM (2).jpeg", "IMG-20260628-WA0074.jpg", 
-            "WhatsApp Image 2026-06-25 at 9.20.35 AM.jpeg", "WhatsApp Image 2026-06-25 at 9.01.11 AM.jpeg", 
-            "WhatsApp Image 2026-06-25 at 9.01.51 AM (1).jpeg", "WhatsApp Image 2026-06-25 at 9.35.02 AM (2).jpeg", 
-            "WhatsApp Image 2026-06-25 at 9.01.28 AM.jpeg", "IMG-20260520-WA0061.jpg", 
-            "WhatsApp Image 2026-06-25 at 9.35.17 AM (2).jpeg", "IMG-20260525-WA0056.jpg", 
-            "WhatsApp Image 2026-06-25 at 9.01.14 AM.jpeg", "IMG-20260216-WA0114.jpg", 
-            "IMG-20260520-WA0071.jpg"
-        ];
+    <h1>Leo Adverts - Project Portfolio</h1>
 
-        const gallery = document.getElementById('image-gallery');
-        imageFiles.forEach(src => {
-            const div = document.createElement('div');
-            div.innerHTML = `<img src="${src}" alt="Portfolio">`;
-            gallery.appendChild(div);
-        });
+    <div class="section" id="project1">
+        <h2>Corporate Signage & Branding</h2>
+        <p>High-visibility solutions for corporate offices and showrooms.</p>
+        <div class="grid" id="corp-gallery"></div>
+    </div>
+
+    <div class="section" id="project2">
+        <h2>Retail & Shop Fit-outs</h2>
+        <p>Complete end-to-end retail environment transformation.</p>
+        <div class="grid" id="retail-gallery"></div>
+    </div>
+
+    <div class="section" id="project3">
+        <h2>3D Letters & Neon Signage</h2>
+        <p>Custom-fabricated premium dimensional signage.</p>
+        <div class="grid" id="sign-gallery"></div>
+    </div>
+
+    <script>
+        // Sort your 74 images into these arrays
+        const corpImages = ["IMG-20260623-WA0051.jpg", "WhatsApp Image 2026-06-25 at 9.01.34 AM.jpeg", "WhatsApp Image 2026-06-25 at 9.01.30 AM.jpeg"];
+        const retailImages = ["WhatsApp Image 2026-06-25 at 9.01.20 AM.jpeg", "IMG-20260419-WA0014.jpg", "WhatsApp Image 2026-06-25 at 9.20.26 AM.jpeg"];
+        const signImages = ["IMG-20260511-WA0049.jpg", "IMG-20251226-WA0092.jpg", "IMG-20260216-WA0118.jpg"];
+
+        function renderGallery(arr, elementId, desc) {
+            const container = document.getElementById(elementId);
+            arr.forEach(src => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `<img src="${src}" alt="Portfolio"><span class="desc">${desc}</span>`;
+                container.appendChild(div);
+            });
+        }
+
+        renderGallery(corpImages, 'corp-gallery', 'Corporate Exterior Branding');
+        renderGallery(retailImages, 'retail-gallery', 'Interior Shop Setup');
+        renderGallery(signImages, 'sign-gallery', 'Custom 3D Lettering');
 
         function generatePDF() {
             const element = document.getElementById('portfolio');
-            const opt = {
-                margin: 0.1,
-                filename: 'Leo_Adverts_Complete_Portfolio.pdf',
-                image: { type: 'jpeg', quality: 1.0 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'in', format: 'a3', orientation: 'portrait' }
-            };
-            html2pdf().set(opt).from(element).save();
+            html2pdf(element, { filename: 'Leo_Adverts_Portfolio.pdf', image: { type: 'jpeg', quality: 1.0 }, jsPDF: { format: 'a3', orientation: 'portrait' } });
         }
     </script>
 </body>
